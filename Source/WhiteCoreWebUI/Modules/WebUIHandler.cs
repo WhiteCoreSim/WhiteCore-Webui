@@ -512,14 +512,17 @@ namespace WhiteCore.Addon.WebUI
                     profile = profileData.GetUserProfile(user.PrincipalID);
                 }
                 if (AvatarArchive.Length > 0)
+                {
                     profile.AArchiveName = AvatarArchive;
-
+                }
+            //    MainConsole.Instance.InfoFormat("[WebUI] Triggered Archive load of " + profile.AArchiveName);
                 profile.IsNewUser = true;
                 
                 profile.MembershipGroup = UserTitle;
                 profile.CustomType = UserTitle;
                 
                 profileData.UpdateUserProfile(profile);
+             //   MainConsole.Instance.RunCommand("load avatar archive " + user.FirstName + " " + user.LastName + " Devil");
             }
 
             resp["UUID"] = OSD.FromUUID(userID);
@@ -539,7 +542,8 @@ namespace WhiteCore.Addon.WebUI
 
             foreach (AvatarArchive a in temp)
             {
-                names.Add(OSD.FromString(a.FileName));
+                names.Add(OSD.FromString(a.FolderName));
+                //names.Add(OSD.FromString(a.FileName));
                 snapshot.Add(OSD.FromUUID(a.Snapshot));
             }
 
