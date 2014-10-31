@@ -9,3 +9,5 @@ Drop the Source in your addon-modules folder and run "compile module" in your Wh
 Add the WEBUI.ini to your WhiteCoreSim/Config/Grid/ServerConfiguration/Modules folder
 Edit the password
 Upload the WebSite part and edit "config.example.php" and "databaseinfo.example.php" found in the settings folder.
+
+More to come
