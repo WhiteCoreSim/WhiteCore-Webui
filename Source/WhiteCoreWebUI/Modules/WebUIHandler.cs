@@ -239,7 +239,47 @@ namespace WhiteCore.Addon.WebUI
             DataPlugins.RequestPlugin<IAgentConnector>().UpdateAgent(agent);
             MainConsole.Instance.Warn ("Admin added");
         }
+		#region newcommands
+		//Bit of Sanitizing
+		public static string CleanCommandStrings(string dirtyString)
+		{
+			string removeChars = " ?&^$#@!()+-,:;<>’\'-_*";
+			string result = dirtyString;
 
+			foreach (char c in removeChars)
+			{
+				result = result.Replace(c.ToString(), string.Empty);
+			}
+
+			return result;
+		}
+		//Provides additional commands to be sent directly to the GridServer
+		private void SendCommand(IScene scene, string cmd)
+		{
+			MainConsole.Instance.RunCommand(cmd);
+		}
+		private void SaveIAR(IScene scene, string firstname, string lastname, string name,string folder)
+		{
+			MainConsole.Instance.RunCommand ("save iar " + firstname + " " +lastname+ " " +folder+ " " + name + ".iar");
+		}
+		private void WipeDeadRegions(IScene scene)
+		{
+			MainConsole.Instance.RunCommand ("grid clear down regions");
+		}
+		private void WipeRegionByName(IScene scene, string regionname)
+		{
+			MainConsole.Instance.RunCommand ("grid clear region " + regionname);
+		}
+
+		private void SetLoginText(IScene scene, string text)
+		{
+			MainConsole.Instance.RunCommand ("set login text " + CleanCommandStrings(text));
+		}
+		private void LoadIAR(IScene scene,string firstname, string lastname, string folder, string iar)
+		{
+			MainConsole.Instance.RunCommand ("load iar " + firstname + " " + lastname + " " + folder + " " + iar);
+		}
+		#endregion
         private void DemoteUser(IScene scene, string[] cmd)
         {
             string name = MainConsole.Instance.Prompt ("Name of user");
@@ -863,7 +903,7 @@ namespace WhiteCore.Addon.WebUI
             string newPassword = map["NewPassword"].AsString();
 
             ILoginService loginService = m_registry.RequestModuleInterface<ILoginService>();
-            IUserAccountService accountService = m_registry.RequestModuleInterface<IUserAccountService>();
+            //IUserAccountService accountService = m_registry.RequestModuleInterface<IUserAccountService>();
             UUID userID = map["UUID"].AsUUID();
             UserAccount account = m_registry.RequestModuleInterface<IUserAccountService>().GetUserAccount(null, userID);
             IAuthenticationService auths = m_registry.RequestModuleInterface<IAuthenticationService>();
@@ -1454,7 +1494,7 @@ namespace WhiteCore.Addon.WebUI
             {
                 string regionName = map.ContainsKey("Region") ? map["Region"].ToString().Trim() : "";
                 UUID regionID = map.ContainsKey("RegionID") ? UUID.Parse(map["RegionID"].ToString()) : UUID.Zero;
-                UUID scopeID = map.ContainsKey("ScopeID") ? UUID.Parse(map["ScopeID"].ToString()) : UUID.Zero;
+                //UUID scopeID = map.ContainsKey("ScopeID") ? UUID.Parse(map["ScopeID"].ToString()) : UUID.Zero;
                 GridRegion region=null;
                 if (regionID != UUID.Zero)
                 {
@@ -1492,7 +1532,7 @@ namespace WhiteCore.Addon.WebUI
             if (directory != null && map.ContainsKey("Region") == true)
             {
                 UUID RegionID = UUID.Parse(map["Region"]);
-                UUID ScopeID = map.ContainsKey("ScopeID") ? UUID.Parse(map["ScopeID"].ToString()) : UUID.Zero;
+                //UUID ScopeID = map.ContainsKey("ScopeID") ? UUID.Parse(map["ScopeID"].ToString()) : UUID.Zero;
                 UUID owner = map.ContainsKey("Owner") ? UUID.Parse(map["Owner"].ToString()) : UUID.Zero;
                 uint start = map.ContainsKey("Start") ? uint.Parse(map["Start"].ToString()) : 0;
                 uint count = map.ContainsKey("Count") ? uint.Parse(map["Count"].ToString()) : 10;
@@ -1523,7 +1563,7 @@ namespace WhiteCore.Addon.WebUI
             OSDMap resp = new OSDMap();
 
             UUID regionID = map.ContainsKey("RegionID") ? UUID.Parse(map["RegionID"].ToString()) : UUID.Zero;
-            UUID scopeID = map.ContainsKey("ScopeID") ? UUID.Parse(map["ScopeID"].ToString()) : UUID.Zero;
+           // UUID scopeID = map.ContainsKey("ScopeID") ? UUID.Parse(map["ScopeID"].ToString()) : UUID.Zero;
             UUID parcelID = map.ContainsKey("ParcelInfoUUID") ? UUID.Parse(map["ParcelInfoUUID"].ToString()) : UUID.Zero;
             string parcelName = map.ContainsKey("Parcel") ? map["Parcel"].ToString().Trim() : string.Empty;
 
@@ -1702,7 +1742,7 @@ namespace WhiteCore.Addon.WebUI
                         gnd["ItemID"] = OSD.FromUUID(GND.ItemID);
                         gnd["AssetType"] = OSD.FromInteger((int)GND.AssetType);
                         gnd["ItemName"] = OSD.FromString(GND.ItemName);
-                        GroupNoticeInfo notice = groups.GetGroupNotice(AdminAgentID, GND.NoticeID);
+                      //  GroupNoticeInfo notice = groups.GetGroupNotice(AdminAgentID, GND.NoticeID);
                         gnd["Message"] = OSD.FromString(groups.GetGroupNotice(AdminAgentID, GND.NoticeID).Message);
                         GroupNotices.Add(gnd);
                     }
