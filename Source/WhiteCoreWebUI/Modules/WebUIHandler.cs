@@ -268,12 +268,7 @@ namespace WhiteCore.Addon.WebUI
 			MainConsole.Instance.RunCommand ("grid clear region " + regionname);
 		}
 
-        private void GiveUserMoney(IScene scence, UUID user, uint amount)
-        {
-            m_connector.UserCurrencyTransfer(user, UUID.Zero, amount, "Money Transfer", TransactionType.SystemGenerated,
-                UUID.Zero);
-
-        }
+     
 
         private void GetUserMoney(IScene scene, UUID User)
         {
@@ -439,6 +434,18 @@ namespace WhiteCore.Addon.WebUI
             return resp;
         }
 
+        private OSDMap GiveUserMoney(OSDMap map)
+        {
+            OSDMap web_values = new OSDMap();
+            OSD user = map["user"];
+           
+            uint amount = map["amount"];
+            BaseCurrencyConnector m_connector = Framework.Utilities.DataManager.RequestPlugin<IBaseCurrencyConnector>() as BaseCurrencyConnector;
+            m_connector.UserCurrencyTransfer(user, UUID.Zero, amount, "Money Transfer",
+                TransactionType.BuyMoney, UUID.Zero);
+            MainConsole.Instance.InfoFormat("[WEBUI]: Transferring Money to " + user + " with the amount "+amount);
+            return map;
+        }
         private OSDMap CreateAccount(OSDMap map)
         {
             bool Verified = false;
