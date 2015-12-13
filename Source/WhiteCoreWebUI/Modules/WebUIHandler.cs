@@ -55,10 +55,14 @@ using System.IO;
 using System.Net;
 using System.Reflection;
 using System.Text;
+using WhiteCore.Framework.PresenceInfo;
+using WhiteCore.Modules;
 using DataPlugins = WhiteCore.Framework.Utilities.DataManager;
 using FriendInfo = WhiteCore.Framework.Services.FriendInfo;
 using GridRegion = WhiteCore.Framework.Services.GridRegion;
 using RegionFlags = WhiteCore.Framework.Services.RegionFlags;
+using WhiteCore.Modules.Currency;
+
 
 namespace WhiteCore.Addon.WebUI
 {
@@ -68,6 +72,7 @@ namespace WhiteCore.Addon.WebUI
         public IHttpServer m_server2 = null;
         string m_servernick = "hippogrid";
         protected IRegistryCore m_registry;
+        BaseCurrencyConnector m_connector = Framework.Utilities.DataManager.RequestPlugin<IBaseCurrencyConnector>() as BaseCurrencyConnector;
         public string Name
         {
             get { return GetType().Name; }
@@ -254,14 +259,6 @@ namespace WhiteCore.Addon.WebUI
 			return result;
 		}
 		//Provides additional commands to be sent directly to the GridServer
-		private void SendCommand(IScene scene, string cmd)
-		{
-			MainConsole.Instance.RunCommand(cmd);
-		}
-		private void SaveIAR(IScene scene, string firstname, string lastname, string name,string folder)
-		{
-			MainConsole.Instance.RunCommand ("save iar " + firstname + " " +lastname+ " " +folder+ " " + name + ".iar");
-		}
 		private void WipeDeadRegions(IScene scene)
 		{
 			MainConsole.Instance.RunCommand ("grid clear down regions");
@@ -271,20 +268,33 @@ namespace WhiteCore.Addon.WebUI
 			MainConsole.Instance.RunCommand ("grid clear region " + regionname);
 		}
 
-		private void SetLoginText(IScene scene, string text)
+        private void GiveUserMoney(IScene scence, UUID user, uint amount)
+        {
+            m_connector.UserCurrencyTransfer(user, UUID.Zero, amount, "Money Transfer", TransactionType.SystemGenerated,
+                UUID.Zero);
+
+        }
+
+        private void GetUserMoney(IScene scene, UUID User)
+        {
+            m_connector.GetUserCurrency(User);
+        }
+
+        private void TransferMoney(IScene scene, UUID from, UUID to, uint amount)
+        {
+            m_connector.UserCurrencyTransfer(to, from, amount, "Money Transfer from" + from , TransactionType.MoveMoney,
+                UUID.Zero);
+        }
+        private void SetLoginText(IScene scene, string text)
 		{
-			MainConsole.Instance.RunCommand ("set login text " + CleanCommandStrings(text));
-		}
-		private void LoadIAR(IScene scene,string firstname, string lastname, string folder, string iar)
-		{
-			MainConsole.Instance.RunCommand ("load iar " + firstname + " " + lastname + " " + folder + " " + iar);
+		MainConsole.Instance.RunCommand ("set login text " + CleanCommandStrings(text));
 		}
 		#endregion
         private void DemoteUser(IScene scene, string[] cmd)
         {
-            string name = MainConsole.Instance.Prompt ("Name of user");
-            UserAccount acc = m_registry.RequestModuleInterface<IUserAccountService> ().GetUserAccount(null, name);
-            if (acc == null)
+        string name = MainConsole.Instance.Prompt ("Name of user");
+        UserAccount acc = m_registry.RequestModuleInterface<IUserAccountService> ().GetUserAccount(null, name);
+        if (acc == null)
             {
                 MainConsole.Instance.Warn ("User does not exist, no action taken.");
                 return;
@@ -555,14 +565,12 @@ namespace WhiteCore.Addon.WebUI
                 {
                     profile.AArchiveName = AvatarArchive;
                 }
-            //    MainConsole.Instance.InfoFormat("[WebUI] Triggered Archive load of " + profile.AArchiveName);
                 profile.IsNewUser = true;
                 
                 profile.MembershipGroup = UserTitle;
                 profile.CustomType = UserTitle;
                 
                 profileData.UpdateUserProfile(profile);
-             //   MainConsole.Instance.RunCommand("load avatar archive " + user.FirstName + " " + user.LastName + " Devil");
             }
 
             resp["UUID"] = OSD.FromUUID(userID);
@@ -583,7 +591,6 @@ namespace WhiteCore.Addon.WebUI
             foreach (AvatarArchive a in temp)
             {
                 names.Add(OSD.FromString(a.FolderName));
-                //names.Add(OSD.FromString(a.FileName));
                 snapshot.Add(OSD.FromUUID(a.Snapshot));
             }
 
