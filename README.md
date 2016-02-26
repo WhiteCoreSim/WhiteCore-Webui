@@ -12,12 +12,12 @@ Requirements for get_grid_info.php is mod_rewrite enabled on apache (no nginx co
 =================================================
 Changes in V2:
 =================================================
-1.Bootstrap Base
-2.European Cookie Warning.
-3.Template Engine Used
-4.Switched from sessions to cookies allowing a remember me function
-5.Complete Redesign making the use of own Templates easier
-6.Several new functions including Ajax uploading of images for the login screen and dynamic get_grid_info xml for the viewer
+1. Bootstrap Base
+2. European Cookie Warning.
+3. Template Engine Used
+4. Switched from sessions to cookies allowing a remember me function
+5. Complete Redesign making the use of own Templates easier
+6. Several new functions including Ajax uploading of images for the login screen and dynamic get_grid_info xml for the viewer
 
 Preview here: http://thunderlife.top/neu/
 -------------------------------------------------
