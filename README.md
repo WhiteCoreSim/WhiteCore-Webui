@@ -3,7 +3,7 @@ V2 In Progress:
 =================================================
 
 Adding the Dev Version of the New interface here, no Admin Panel is present at current.
-Also a lot doesnt work properly yet this is for highly expierenced PHP users only that are not afraif of using the database CMD and/or phpmyadmin
+Also a lot doesnt work properly yet this is for highly expierenced PHP users only that are not afraid of using the database CMD and/or phpmyadmin
 
 =================================================
 
