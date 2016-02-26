@@ -8,28 +8,20 @@ function OpenAgent(firstname, lastname)
 
 <?php
 $content = new Template("templates/onlineusers.tpl");
-$content->set("content1",'<div id="content">
-  <div id="ContentHeaderLeft"><h5>'.$SYSURL.'</h5></div>
-  <div id="ContentHeaderCenter"></div>
-  <div id="ContentHeaderRight"><h5>Online Users</h5></div>
-  <div id="usersonline">
-  <div id="info"><p>Info</p></div>
-
-<table>
-  <tbody>
-    <tr>
-      <td>
+$content->set("content1",'<h5>'.SYSNAME.'</h5>
+<div class="row">
+<div class="col-md-4">
         <b>Username:</b>
-      </td>
+      </div>
       
-      <td>
+      <div class="col-md-4">
         <b>Region:</b>
-      </td>
+      </div>
       
-      <td>
+      <div class="col-md-4">
         <b>Info</b>
-      </td>
-    </tr>');
+      </div></div>
+    ');
 	$DbLink = new DB;
 	$DbLink->query("SELECT UserID FROM user_info where IsOnline = '1' AND ".
 					"LastLogin < (UNIX_TIMESTAMP(FROM_UNIXTIME(UNIX_TIMESTAMP(now())))) AND ".
@@ -52,21 +44,17 @@ $content->set("content1",'<div id="content">
 		list($region) = $DbLink3->next_record();
 		if ($region != "")
 		{
-			$online .= '<tr>';
-			$online .= '<td class="even"><b>'.$username.'</b></td>';
-			$online .= '<td class="even"><b>'.$region.'</b></td>';
-			$online .= "<td class='even'><a onClick=\"OpenAgent('".$firstname."','".$lastname."')\"><b><u>Click for more Info</u></b></a></td>";
-			$online .= '</tr>';
-      $content->set("online",$online);
+			$online .= '<div class="row">';
+			$online .= '<div class="col-md-4"><b>'.$username.'</b></div>';
+			$online .= '<div class="col-md-4"><b>'.$region.'</b></div>';
+			$online .= "<div class='col-md-4'><a href='javascript:void()' onClick=\"OpenAgent('".$firstname."','".$lastname."')\"><b><u>Click for more Info</u></b></a></div>";
 		}
+
 	}
+      $content->set("online",$online);
 $content->set("content2",'
-
-    </tbody>
-  </table>
-
 </div>
-</div>');
+');
 
 
 $DbLink->query("SELECT count(*) FROM user_info where IsOnline = '1' and
