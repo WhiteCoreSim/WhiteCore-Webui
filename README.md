@@ -1,4 +1,7 @@
 =================================================
+NEW UPDATE FOR V2 SOON WITH CHANGES FRO MYSQL TO MYSQLI AND PHP7 
+PLEASE BE PATIENT
+=================================================
 V2 In Progress:
 ================================================
 Changes in V2:
