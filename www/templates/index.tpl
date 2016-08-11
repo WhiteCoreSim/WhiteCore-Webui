@@ -101,7 +101,7 @@
 </div>
       </div>
     </div></div>
- <div class="panel panel-default" style="width:85%">
+ <div class="panel panel-default" style="width:80%">
   <div class="panel-heading">[@title] >> [@page]</div>
   <div class="panel-body">
   [@content]
