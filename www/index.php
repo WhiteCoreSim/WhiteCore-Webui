@@ -161,7 +161,7 @@ $layout->set("error","");
                     {
                     	$layout->set("economy","Disabled");
                     }
-                    $layout-set("voice",VOICE);
+                    $layout->set("voice",VOICE);
 	$layout->set("title", SYSNAME);
   $layout->set("style",STYLE);
    $layout->set("page",$page);
