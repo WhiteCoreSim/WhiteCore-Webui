@@ -19,5 +19,5 @@ Changes in V2:
 5. Complete Redesign making the use of own Templates easier
 6. Several new functions including Ajax uploading of images for the login screen and dynamic get_grid_info xml for the viewer
 
-Preview here: [Demo](http://thunderlife.top/neu/)
+Preview here: [Demo](http://thunderlife.top/)
 -------------------------------------------------
