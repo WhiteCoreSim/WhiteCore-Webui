@@ -78,6 +78,14 @@
                 <td vAlign=top noWrap align=left>Unique Visitors:</td>
                 <td vAlign=top noWrap align=right width="1%">[@lastmonthonline]</td>
               </tr>
+               <tr>
+                <td vAlign=top noWrap align=left>Voice:</td>
+                <td vAlign=top noWrap align=right width="1%">[@voice]</td>
+</tr>
+ <tr>
+                <td vAlign=top noWrap align=left>Economy:</td>
+                <td vAlign=top noWrap align=right width="1%">[@economy]</td>
+</tr>
 			  <tr>
                 <td vAlign=top noWrap align=left><strong><a href="index.php?page=onlineusers">Now Online</a>:</strong></td>
                 <td vAlign=top noWrap align=right width="1%"><strong>[@nowonline]</strong></td>
