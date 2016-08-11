@@ -153,6 +153,15 @@ $layout->set("error","");
                     $layout->set("regionscount","$REGIONSCOUNT");
                     $layout->set("lastmonthonline","$LASTMONTHONLINE");
                     $layout->set("nowonline","$NOWONLINE");
+                    if(ECONOMY)
+                    {
+                    	$layout->set("economy","Enabled");
+                    }
+                    else
+                    {
+                    	$layout->set("economy","Disabled");
+                    }
+                    $layout-set("voice",VOICE);
 	$layout->set("title", SYSNAME);
   $layout->set("style",STYLE);
    $layout->set("page",$page);
