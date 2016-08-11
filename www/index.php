@@ -148,7 +148,7 @@ $layout->set("error","");
                      } else { 
                   $layout->set("status","<span class=offline>Grid Offline</span>");
                     }     
-                    $USERCOUNT = $USERCOUNT - 4;
+                    $USERCOUNT = $USERCOUNT - 5; ///Remove System Users from Grid Info Count
                     $layout->set("usercount","$USERCOUNT");
                     $layout->set("regionscount","$REGIONSCOUNT");
                     $layout->set("lastmonthonline","$LASTMONTHONLINE");
