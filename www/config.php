@@ -19,4 +19,6 @@ define("WEBUI_MAP_SERVICE","http://$_SERVER[SERVER_ADDR]:8012/MapService");
 define("WEBUI_MAPAPI_SERVICE","http://$_SERVER[SERVER_ADDR]:8012/MapAPI");
 }
 define("WEBUI_PASSWORD","password"); /// password to communicate to the WebUI.dll
+define("ECONOMY",true); ///Money System Used?
+define("VOICE","Disabled"); ////Vivox/Freeswitch/Mumble/Disabled
 ?>
